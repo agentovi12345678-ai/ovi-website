@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {margin:0; background:#0d1117; color:white; font-family:Arial; padding:20px;}
+.box {background:#161b22; padding:20px; border-radius:10px;}
+img {width:110px; height:110px; border-radius:50%; display:block; margin:auto;}
+input {width:100%; padding:12px; margin-top:12px; background:#0d1117; border:1px solid #30363d; border-radius:6px; color:white;}
+button {padding:12px; width:100%; background:#238636; border:none; margin-top:15px; border-radius:6px; color:white;}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2 style="text-align:center;">Your Profile</h2>
+
+<img id="photo">
+
+<p>Name:</p>
+<input id="name">
+
+<p>Email:</p>
+<input id="email" disabled>
+
+<button onclick="update()">Update Profile</button>
+<button onclick="logout()" style="background:#d63c3c;">Logout</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+<script>
+const config={apiKey:"AIzaSyAIEYwf3VHJWW_Hgo2v_ClB1knQSH4bqFk",
+authDomain:"ovi-s-earning-bdt-99e63.firebaseapp.com"};
+firebase.initializeApp(config);
+
+firebase.auth().onAuthStateChanged(user=>{
+  if(!user) return window.location="login.html";
+  document.getElementById("name").value=user.displayName;
+  document.getElementById("email").value=user.email;
+  document.getElementById("photo").src=user.photoURL || "https://i.imgur.com/6VBx3io.png";
+});
+
+function update(){
+  let user=firebase.auth().currentUser;
+  let name=document.getElementById("name").value;
+
+  user.updateProfile({displayName:name});
+  alert("Updated!");
+}
+
+function logout(){ firebase.auth().signOut().then(()=>window.location="login.html"); }
+</script>
+
+</body>
+</html>

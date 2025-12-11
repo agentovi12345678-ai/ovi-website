@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ovi's Earning BDT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+        }
+        .box {
+            background: #fff;
+            width: 90%;
+            max-width: 350px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #aaa;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #777;
+        }
+        button {
+            width: 95%;
+            padding: 12px;
+            background: #0084ff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        #signupBox { display: none; }
+    </style>
+</head>
+
+<body>
+
+    <h2>Ovi's Earning BDT</h2>
+
+    <!-- LOGIN BOX -->
+    <div class="box" id="loginBox">
+        <h3>Login</h3>
+        <input id="loginEmail" type="email" placeholder="Email">
+        <input id="loginPass" type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p onclick="showSignup()" style="color:blue; margin-top:10px;">Create new account</p>
+        <p id="loginMsg"></p>
+    </div>
+
+    <!-- SIGNUP BOX -->
+    <div class="box" id="signupBox">
+        <h3>Create Account</h3>
+        <input id="signupEmail" type="email" placeholder="Email">
+        <input id="signupPass" type="password" placeholder="Password">
+        <button onclick="signup()">Signup</button>
+        <p onclick="showLogin()" style="color:red; margin-top:10px;">Already have account?</p>
+        <p id="signupMsg"></p>
+    </div>
+
+    <!-- FIREBASE SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
+        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // YOUR CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyAIEYwf3VHJWW_Hgo2v_ClB1knQSH4bqFk",
+            authDomain: "ovi-s-earning-bdt-99e63.firebaseapp.com",
+            projectId: "ovi-s-earning-bdt-99e63",
+            storageBucket: "ovi-s-earning-bdt-99e63.firebasestorage.app",
+            messagingSenderId: "334608500230",
+            appId: "1:334608500230:web:15ffa0fed9f9a6f82f6587"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // SIGNUP FUNCTION
+        async function signup() {
+            let email = document.getElementById("signupEmail").value;
+            let pass = document.getElementById("signupPass").value;
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, pass);
+                document.getElementById("signupMsg").innerHTML = "Account Created ✔";
+            } catch (error) {
+                document.getElementById("signupMsg").innerHTML = error.message;
+            }
+        }
+
+        // LOGIN FUNCTION
+        async function login() {
+            let email = document.getElementById("loginEmail").value;
+            let pass = document.getElementById("loginPass").value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                document.getElementById("loginMsg").innerHTML = "Login successful ✔";
+            } catch (error) {
+                document.getElementById("loginMsg").innerHTML = error.message;
+            }
+        }
+
+        // SWITCH BOXES
+        window.showSignup = function() {
+            document.getElementById("loginBox").style.display = "none";
+            document.getElementById("signupBox").style.display = "block";
+        }
+
+        window.showLogin = function() {
+            document.getElementById("signupBox").style.display = "none";
+            document.getElementById("loginBox").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>

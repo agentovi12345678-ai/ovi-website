@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {margin:0; background:#0d1117; color:white; font-family:Arial; padding:20px;}
+.card {background:#161b22; padding:20px; border-radius:10px;}
+button {padding:12px; background:#238636; border:none; border-radius:6px; color:white; width:100%; margin-top:15px;}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>Welcome</h2>
+
+<p><b>User:</b> <span id="name"></span></p>
+<p><b>Email:</b> <span id="email"></span></p>
+
+<button onclick="window.location='profile.html'">Profile</button>
+<button onclick="logout()" style="background:#d63c3c;">Logout</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+<script>
+const config={apiKey:"AIzaSyAIEYwf3VHJWW_Hgo2v_ClB1knQSH4bqFk",
+authDomain:"ovi-s-earning-bdt-99e63.firebaseapp.com"};
+firebase.initializeApp(config);
+
+firebase.auth().onAuthStateChanged(user=>{
+  if(!user) return window.location="login.html";
+  document.getElementById("name").innerHTML=user.displayName;
+  document.getElementById("email").innerHTML=user.email;
+});
+
+function logout(){ firebase.auth().signOut().then(()=>window.location="login.html"); }
+</script>
+
+</body>
+</html>

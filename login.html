@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {margin:0; background:#0d1117; font-family:Arial; display:flex; justify-content:center; align-items:center; height:100vh;}
+.box {width:330px; background:#161b22; padding:30px; border-radius:10px;}
+h2 {color:white; text-align:center;}
+input {width:100%; padding:12px; margin-top:12px; background:#0d1117; border:1px solid #30363d; border-radius:6px; color:white;}
+button {width:100%; padding:12px; background:#238636; margin-top:15px; color:white; border:none; border-radius:6px;}
+a {color:#58a6ff; text-decoration:none; text-align:center; display:block; margin-top:15px;}
+</style>
+</head>
+
+<body>
+<div class="box">
+<h2>Login</h2>
+
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<a href="signup.html">Create new account</a>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+<script>
+const config = {
+  apiKey: "AIzaSyAIEYwf3VHJWW_Hgo2v_ClB1knQSH4bqFk",
+  authDomain: "ovi-s-earning-bdt-99e63.firebaseapp.com",
+  projectId: "ovi-s-earning-bdt-99e63",
+  storageBucket: "ovi-s-earning-bdt-99e63.firebasestorage.app",
+  messagingSenderId: "334608500230",
+  appId: "1:334608500230:web:15ffa0fed9f9a6f82f6587"
+};
+firebase.initializeApp(config);
+
+function login(){
+  let email=document.getElementById("email").value;
+  let pass=document.getElementById("password").value;
+
+  firebase.auth().signInWithEmailAndPassword(email, pass)
+  .then(()=>{
+     window.location="dashboard.html";
+  })
+  .catch(err=>alert(err.message));
+}
+</script>
+</body>
+</html>
